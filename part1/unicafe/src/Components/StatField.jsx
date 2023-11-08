@@ -1,7 +1,7 @@
 const StatField = (props) => {
   return (
-    <p>
-      {props.text} {props.num}
+    <p style={{ margin: 0 }}>
+      {props.text}: <strong>{props.num}</strong>
     </p>
   )
 }

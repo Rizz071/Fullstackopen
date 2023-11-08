@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 import Button from "./Components/Button"
-import StatField from "./Components/StatField"
+import Statistics from "./Components/Statistics"
 
 const App = () => {
   // save clicks of each button to its own state
@@ -31,19 +31,7 @@ const App = () => {
         text="Bad"
       />
 
-      <h1>Statistics</h1>
-      <StatField text="Good" num={good} />
-      <StatField text="Neutral" num={neutral} />
-      <StatField text="Bad" num={bad} />
-      <StatField text="All" num={good + neutral + bad} />
-      <StatField
-        text="Average"
-        num={((good - bad) / (good + neutral + bad)).toFixed(2)}
-      />
-      <StatField
-        text="Positive"
-        num={((good * 100) / (good + neutral + bad)).toFixed(2) + "%"}
-      />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </>
   )
 }
