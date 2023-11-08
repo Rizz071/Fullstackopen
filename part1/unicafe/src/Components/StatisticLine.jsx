@@ -1,8 +1,11 @@
 const StatisticLine = (props) => {
   return (
-    <p style={{ margin: 0 }}>
-      {props.text}: <strong>{props.num}</strong>
-    </p>
+    <tr>
+      <td>{props.text}:</td>
+      <td>
+        <strong>{props.num}</strong>
+      </td>
+    </tr>
   )
 }
 
