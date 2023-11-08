@@ -1,10 +1,8 @@
 const StatField = (props) => {
   return (
-    <>
-      <p>
-        {props.text} {props.num}
-      </p>
-    </>
+    <p>
+      {props.text} {props.num}
+    </p>
   )
 }
 
