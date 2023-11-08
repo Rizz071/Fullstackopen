@@ -1,4 +1,4 @@
-import StatField from "./StatField"
+import StatisticLine from "./StatisticLine"
 
 const Statistics = ({ good, neutral, bad }) => {
   if (good > 0 || neutral > 0 || bad > 0) {
@@ -6,15 +6,15 @@ const Statistics = ({ good, neutral, bad }) => {
       <>
         <h1>Statistics</h1>
 
-        <StatField text="Good" num={good} />
-        <StatField text="Neutral" num={neutral} />
-        <StatField text="Bad" num={bad} />
-        <StatField text="All" num={good + neutral + bad} />
-        <StatField
+        <StatisticLine text="Good" num={good} />
+        <StatisticLine text="Neutral" num={neutral} />
+        <StatisticLine text="Bad" num={bad} />
+        <StatisticLine text="All" num={good + neutral + bad} />
+        <StatisticLine
           text="Average"
           num={((good - bad) / (good + neutral + bad)).toFixed(2)}
         />
-        <StatField
+        <StatisticLine
           text="Positive"
           num={((good * 100) / (good + neutral + bad)).toFixed(2) + "%"}
         />

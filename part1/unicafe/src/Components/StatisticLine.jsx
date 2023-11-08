@@ -1,4 +1,4 @@
-const StatField = (props) => {
+const StatisticLine = (props) => {
   return (
     <p style={{ margin: 0 }}>
       {props.text}: <strong>{props.num}</strong>
@@ -6,4 +6,4 @@ const StatField = (props) => {
   )
 }
 
-export default StatField
+export default StatisticLine
