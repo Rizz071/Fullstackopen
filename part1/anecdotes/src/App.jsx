@@ -1,4 +1,5 @@
 import { useState } from "react"
+import MostVotesAnecdote from "./MostVotesAnecdote"
 
 const App = () => {
   const anecdotes = [
@@ -34,22 +35,19 @@ const App = () => {
   }
 
   const handleVoteButton = () => {
-    // console.log("old voteObj:", voteObj)
     const newVoteObj = { ...voteObj }
-    // console.log("new voteObj:", newVoteObj)
-    // console.log("selected anec num: ", selected)
-    // console.log("selected anec num votes: ", voteObj[selected])
     newVoteObj[selected] += 1
-    // console.log("new anec num votes: ", newVoteObj[selected])
     setVoteObj(newVoteObj)
   }
 
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <div>{anecdotes[selected]}</div>
       <div>has {voteObj[selected]} votes</div>
       <button onClick={handleVoteButton}>vote</button>
       <button onClick={handleSelectAnecdote}>next anecdote</button>
+      <MostVotesAnecdote anecdotes={anecdotes} voteObj={voteObj} />
     </>
   )
 }
