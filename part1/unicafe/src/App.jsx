@@ -12,24 +12,9 @@ const App = () => {
   return (
     <>
       <h1>Give Feedback</h1>
-      <Button
-        onClick={() => {
-          setGood(good + 1)
-        }}
-        text="Good"
-      />
-      <Button
-        onClick={() => {
-          setNeutral(neutral + 1)
-        }}
-        text="Neutral"
-      />
-      <Button
-        onClick={() => {
-          setBad(bad + 1)
-        }}
-        text="Bad"
-      />
+      <Button onClick={() => { setGood(good + 1) }} text="Good" />
+      <Button onClick={() => { setNeutral(neutral + 1) }} text="Neutral" />
+      <Button onClick={() => { setBad(bad + 1) }} text="Bad" />
 
       <Statistics good={good} neutral={neutral} bad={bad} />
     </>
