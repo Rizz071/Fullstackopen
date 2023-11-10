@@ -13,7 +13,14 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    setPersons(persons.concat({ name: newName }))
+
+    // check for double name
+    let copyName = false
+    persons.map((person) => {
+      if (person.name === newName) copyName = true
+    })
+
+    copyName ? alert(`${newName} is already added to phonebook`) : setPersons(persons.concat({ name: newName }))
   }
 
 
