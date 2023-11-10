@@ -3,7 +3,8 @@ const Total = (props) => {
     <>
       <p>
         <strong>
-          Total of {props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises} exercises
+          {/* Using reducer to evaluate sum of exercises */}
+          Total of {props.course.parts.reduce((accumulator, currentValue) => { return (accumulator + currentValue.exercises) }, 0)} exercises
         </strong>
       </p>
     </>
