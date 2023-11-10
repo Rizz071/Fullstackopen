@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
-import InputName from './components/InputName'
-import InputNumber from './components/InputNumber'
+import AddNewForm from './components/AddNewForm'
 import InputFilter from './components/InputFilter'
 import NumbersList from './components/NumbersList'
 
@@ -46,12 +45,11 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <InputFilter newFilter={newFilter} setNewFilter={setNewFilter} />
+
       <h2>Add a new</h2>
-      <form onSubmit={addPerson}>
-        <InputName newName={newName} setNewName={setNewName} />
-        <InputNumber newNumber={newNumber} setNewNumber={setNewNumber} />
-        <button type="submit">add</button>
-      </form>
+      <AddNewForm addPerson={addPerson} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} />
+
+      <h2>Numbers</h2>
       <NumbersList persons={persons} newFilter={newFilter} />
     </div>
   )
