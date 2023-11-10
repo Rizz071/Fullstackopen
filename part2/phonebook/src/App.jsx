@@ -1,16 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+import axios from 'axios'
 
 import AddNewForm from './components/AddNewForm'
 import InputFilter from './components/InputFilter'
 import NumbersList from './components/NumbersList'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+
+  useEffect(() => {
+    console.log('effect started...')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('Data was retrieved from server: ', response.data)
+        setPersons(response.data)
+      })
+      .catch((error) => {
+        console.log('Error catched during retrieving data from server: ', error)
+      })
+  }, [])
+
+
+  const [persons, setPersons] = useState([])
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
