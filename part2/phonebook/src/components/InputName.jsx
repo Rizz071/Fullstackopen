@@ -1,6 +1,5 @@
 const InputName = ({ newName, setNewName }) => {
     const handleNameChange = (event) => {
-        event.preventDefault()
         setNewName(event.target.value)
     }
 
