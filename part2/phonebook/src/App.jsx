@@ -83,6 +83,13 @@ const App = () => {
 
           setPersons(persons.concat(newPerson))
         })
+        .catch((error) => {
+          console.log('Error catched during adding person to server: ', error)
+          setError(`Error catched during adding person to server: ${newPerson.name}`)
+          setTimeout(() => {
+            setError(null)
+          }, 3000)
+        })
     }
   }
 

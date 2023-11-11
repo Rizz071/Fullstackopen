@@ -16,14 +16,12 @@ const addPerson = (person) => {
             console.log(`Adding `, person, ` to db.json was successfull.`)
             return response.data
         })
-        .catch((error) => { console.log('Error catched during adding person to server: ', error) })
 }
 
 const delPerson = (id) => {
     const request = axios.delete(`${baseURL}/${id}`)
     return request
         .then(response => console.log(`Received response from axios: statusText: ${response.statusText}`))
-    // .catch((error) => { console.log('Error catched during deleting PERSON from server: ', error) })
 }
 
 const replacePerson = (personToReplace) => {
