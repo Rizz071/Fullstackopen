@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import axios from 'axios'
+import PersonsService from './services/PersonsService'
 
 import AddNewForm from './components/AddNewForm'
 import InputFilter from './components/InputFilter'
@@ -9,16 +9,8 @@ import NumbersList from './components/NumbersList'
 const App = () => {
 
   useEffect(() => {
-    console.log('effect started...')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('Data was retrieved from server: ', response.data)
-        setPersons(response.data)
-      })
-      .catch((error) => {
-        console.log('Error catched during retrieving data from server: ', error)
-      })
+    console.log('Effect started.')
+    PersonsService.getAll().then(initialPersons => setPersons(initialPersons))
   }, [])
 
 
@@ -50,8 +42,22 @@ const App = () => {
       return
     }
 
-    setPersons(persons.concat({ name: newName, number: newNumber, id: persons.length + 1 }))
+    PersonsService
+      .addPerson({ name: newName, number: newNumber })
+      .then(newPerson => setPersons(persons.concat(newPerson)))
   }
+
+  const removePerson = (id) => {
+    const p = persons.find((p) => p.id === id)
+    if (window.confirm(`Are you sure to completely remove ${p.name} from the numbers list?`)) {
+      console.log(`Attemping to remove person with id ${id} from db.json...`)
+
+      PersonsService
+        .delPerson(id)
+        .then(() => setPersons(persons.filter((p) => p.id !== id)))
+    }
+  }
+
 
   return (
     <div>
@@ -62,7 +68,7 @@ const App = () => {
       <AddNewForm addPerson={addPerson} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} />
 
       <h2>Numbers</h2>
-      <NumbersList persons={persons} newFilter={newFilter} />
+      <NumbersList persons={persons} newFilter={newFilter} removePerson={removePerson} />
     </div>
   )
 }
