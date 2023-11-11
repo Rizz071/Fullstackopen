@@ -8,6 +8,7 @@ import NumbersList from './components/NumbersList'
 
 const App = () => {
 
+  //Side effect in action! :)
   useEffect(() => {
     console.log('Effect started.')
     PersonsService.getAll().then(initialPersons => setPersons(initialPersons))
@@ -15,7 +16,6 @@ const App = () => {
 
 
   const [persons, setPersons] = useState([])
-
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
@@ -24,27 +24,44 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-    // check for double name and for double phone number
-    let copyNameFLAG = false
-    let copyNumberFLAG = false
+    let FLAGtoExit = false
+
+    //Running through all persons
     persons.map((person) => {
-      if (person.name === newName) copyNameFLAG = true
-      if (person.number === newNumber) copyNumberFLAG = true
+
+      //Checking if we have identical names or phone numbers
+      if (person.name.toLowerCase() === newName.toLowerCase() || person.number.toLowerCase() === newNumber.toLowerCase()) {
+
+        //Setting up FLAG to not add new Person to list
+        FLAGtoExit = true
+
+        //New Person === Old Person AND New Number === Old Number -> doing nothing
+        if (person.name.toLowerCase() === newName.toLowerCase() && person.number.toLowerCase() === newNumber.toLowerCase()) {
+          alert(`${newName} is already added to phonebook`)
+        }
+
+        //New Person !== Old Person AND New Number === Old Number -> doing nothing
+        if (person.name.toLowerCase() !== newName.toLowerCase() && person.number.toLowerCase() === newNumber.toLowerCase()) {
+          alert(`Phone number ${newNumber} is already added to phonebook`)
+        }
+
+        //New Person === Old Person AND New Number !== Old Number -> replacing numbers
+        if (person.name.toLowerCase() === newName.toLowerCase() && person.number.toLowerCase() !== newNumber.toLowerCase()) {
+          if (window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)) {
+            PersonsService.replacePerson({ name: newName, number: newNumber, id: person.id })
+            setPersons(persons.map(p => p.id !== person.id ? p : { name: newName, number: newNumber, id: person.id }))
+          }
+        }
+      }
     })
 
-    if (copyNameFLAG) {
-      alert(`${newName} is already added to phonebook`)
-      return
+    //If FLAG was set -> doing nothing
+    //else -> adding new Person to db.json
+    if (!FLAGtoExit) {
+      PersonsService
+        .addPerson({ name: newName, number: newNumber })
+        .then(newPerson => setPersons(persons.concat(newPerson)))
     }
-
-    if (copyNumberFLAG) {
-      alert(`Phone number ${newNumber} is already added to phonebook to another name`)
-      return
-    }
-
-    PersonsService
-      .addPerson({ name: newName, number: newNumber })
-      .then(newPerson => setPersons(persons.concat(newPerson)))
   }
 
   const removePerson = (id) => {

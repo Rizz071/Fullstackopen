@@ -26,9 +26,19 @@ const delPerson = (id) => {
         .catch((error) => { console.log('Error catched during deleting PERSON from server: ', error) })
 }
 
+const replacePerson = (personToReplace) => {
+    const request = axios.put(`${baseURL}/${personToReplace.id}`, personToReplace)
+    return request
+        .then(response => {
+            console.log(`Replacing `, personToReplace, ` in db.json was successfull.`)
+            return response.data
+        })
+        .catch((error) => { console.log('Error catched during replacing person in a server: ', error) })
+}
 
 export default {
     getAll,
     addPerson,
+    replacePerson,
     delPerson
 }
