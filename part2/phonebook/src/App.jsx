@@ -5,6 +5,8 @@ import PersonsService from './services/PersonsService'
 import AddNewForm from './components/AddNewForm'
 import InputFilter from './components/InputFilter'
 import NumbersList from './components/NumbersList'
+import Notification from './components/Notification'
+import Error from './components/Error'
 
 const App = () => {
 
@@ -19,7 +21,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
-
+  const [notification, setNotification] = useState(null)
+  const [error, setError] = useState(null)
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -37,12 +40,18 @@ const App = () => {
 
         //New Person === Old Person AND New Number === Old Number -> doing nothing
         if (person.name.toLowerCase() === newName.toLowerCase() && person.number.toLowerCase() === newNumber.toLowerCase()) {
-          alert(`${newName} is already added to phonebook`)
+          setError(`${newName} is already added to phonebook`)
+          setTimeout(() => {
+            setError(null)
+          }, 3000)
         }
 
         //New Person !== Old Person AND New Number === Old Number -> doing nothing
         if (person.name.toLowerCase() !== newName.toLowerCase() && person.number.toLowerCase() === newNumber.toLowerCase()) {
-          alert(`Phone number ${newNumber} is already added to phonebook`)
+          setError(`Phone number ${newNumber} is already added to phonebook`)
+          setTimeout(() => {
+            setError(null)
+          }, 3000)
         }
 
         //New Person === Old Person AND New Number !== Old Number -> replacing numbers
@@ -50,6 +59,11 @@ const App = () => {
           if (window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)) {
             PersonsService.replacePerson({ name: newName, number: newNumber, id: person.id })
             setPersons(persons.map(p => p.id !== person.id ? p : { name: newName, number: newNumber, id: person.id }))
+
+            setNotification(`Old number of ${person.name} was replaced by ${newNumber}`)
+            setTimeout(() => {
+              setNotification(null)
+            }, 3000)
           }
         }
       }
@@ -60,7 +74,15 @@ const App = () => {
     if (!FLAGtoExit) {
       PersonsService
         .addPerson({ name: newName, number: newNumber })
-        .then(newPerson => setPersons(persons.concat(newPerson)))
+        .then(newPerson => {
+
+          setNotification(`${newName} was added to database`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 3000)
+
+          setPersons(persons.concat(newPerson))
+        })
     }
   }
 
@@ -72,6 +94,14 @@ const App = () => {
       PersonsService
         .delPerson(id)
         .then(() => setPersons(persons.filter((p) => p.id !== id)))
+        .catch(error => {
+          setError(`Information of ${p.name} was already removed from server`)
+          setTimeout(() => {
+            setError(null)
+          }, 5000)
+
+          setPersons(persons.filter(person => person.id !== p.id))
+        })
     }
   }
 
@@ -82,6 +112,8 @@ const App = () => {
       <InputFilter newFilter={newFilter} setNewFilter={setNewFilter} />
 
       <h2>Add a new</h2>
+      <Notification message={notification} />
+      <Error message={error} />
       <AddNewForm addPerson={addPerson} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} />
 
       <h2>Numbers</h2>
