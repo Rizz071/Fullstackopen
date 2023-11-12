@@ -29,11 +29,10 @@ function App() {
   }, [])
 
 
-
   return (
     <>
       <InputFilter filter={filter} setFilter={setFilter} />
-      <OutputField filter={filter} countries={countries} />
+      <OutputField filter={filter} setFilter={setFilter} countries={countries} />
     </>
   )
 }

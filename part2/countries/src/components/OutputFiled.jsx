@@ -1,10 +1,19 @@
 import { useState } from 'react'
+import GetWeather from './GetWeather'
 
 
 
-const OutputField = ({ filter, countries }) => {
+const OutputField = ({ filter, setFilter, countries }) => {
 
     const filteredList = countries.filter(country => country.name.official.toLowerCase().includes(filter.toLowerCase()) || country.name.common.toLowerCase().includes(filter.toLowerCase()))
+
+    //Waiting for data arriving through request by axios
+    if (countries.length === 0) {
+        console.log('Waiting for all countries data...')
+        return null
+    } else {
+        console.log('Data arrived: ', countries)
+    }
 
 
 
@@ -19,6 +28,7 @@ const OutputField = ({ filter, countries }) => {
                 <ul>{Object.values(filteredList[0].languages).map(language => <li key={language}>{language}</li>)}</ul>
 
                 <img src={filteredList[0].flags.svg} alt={filteredList[0].flags.alt} style={{ width: '10%', border: '1px solid #555' }} />
+                <GetWeather latlng={filteredList[0].capitalInfo.latlng} />
             </div>
         )
     }
@@ -26,7 +36,7 @@ const OutputField = ({ filter, countries }) => {
     if (filteredList.length > 1 && filteredList.length <= 10) {
         return (
             filteredList.map((country) => {
-                return <li key={country.name.official}>{country.name.official}</li>
+                return <li key={country.name.official}>{country.name.official} <button onClick={() => setFilter(country.name.official)}>show</button></li>
             })
         )
     }
