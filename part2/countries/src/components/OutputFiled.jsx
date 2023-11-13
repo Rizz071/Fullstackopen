@@ -12,7 +12,7 @@ const OutputField = ({ filter, setFilter, countries }) => {
         console.log('Waiting for all countries data...')
         return null
     } else {
-        console.log('Data arrived: ', countries)
+        console.log(`Data arrived. Total ${countries.length} countries.`)
     }
 
 

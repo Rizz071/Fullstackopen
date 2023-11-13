@@ -7,7 +7,8 @@ const GetWeather = ({ latlng }) => {
     const [wheather, setWheather] = useState(null)
 
 
-    const key = 'fc729c594b51076e2d8f9e63fd2d5307'
+    const key = import.meta.env.VITE_API_KEY
+
     const [lat, lon] = latlng
 
     useEffect(() => {

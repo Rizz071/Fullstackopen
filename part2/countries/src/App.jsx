@@ -6,7 +6,6 @@ import InputFilter from './components/InputFilter'
 import OutputField from './components/OutputFiled'
 
 
-
 function App() {
 
   const [filter, setFilter] = useState('')
