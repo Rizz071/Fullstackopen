@@ -28,7 +28,7 @@ const OutputField = ({ filter, setFilter, countries }) => {
                 <ul>{Object.values(filteredList[0].languages).map(language => <li key={language}>{language}</li>)}</ul>
 
                 <img src={filteredList[0].flags.svg} alt={filteredList[0].flags.alt} style={{ width: '10%', border: '1px solid #555' }} />
-                <GetWeather latlng={filteredList[0].capitalInfo.latlng} />
+                <GetWeather latlng={filteredList[0].capitalInfo.latlng} capital={filteredList[0].capital} />
             </div>
         )
     }

@@ -2,9 +2,9 @@ import { useState, useEffect } from "react"
 
 import axios from "axios"
 
-const GetWeather = ({ latlng }) => {
+const GetWeather = ({ capital, latlng }) => {
 
-    const [wheather, setWheather] = useState(null)
+    const [weather, setWeather] = useState(null)
 
 
     const key = import.meta.env.VITE_API_KEY
@@ -15,25 +15,26 @@ const GetWeather = ({ latlng }) => {
         axios
             .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`)
             .then(response => {
-                setWheather(response.data)
-                console.log(response.data)
+                setWeather(response.data)
             })
             .catch(error => console.log(error))
 
     }, [])
 
 
-    if (wheather === null) {
-        console.log('Waiting for wheather data...')
+    if (weather === null) {
+        console.log('Waiting for weather data...')
         return null
     } else {
-        console.log('Wheather data has arrived', wheather)
+        console.log('weather data has arrived', weather)
     }
 
     return (
         <div>
-            <h2>Wheather in {wheather.name}</h2>
-            <p>temperature {wheather.main.temp} Celsius</p>
+            <h2>Weather in {weather.name} ({capital})</h2>
+            <p>temperature {weather.main.temp} Celsius</p>
+            <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} />
+            <p>wind {weather.wind.speed} m/s</p>
         </div>
     )
 
