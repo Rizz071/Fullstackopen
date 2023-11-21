@@ -30,7 +30,7 @@ const App = () => {
     let FLAGtoExit = false
 
     //Running through all persons
-    persons.map((person) => {
+    persons.forEach((person) => {
 
       //Checking if we have identical names or phone numbers
       if (person.name.toLowerCase() === newName.toLowerCase() || person.number.toLowerCase() === newNumber.toLowerCase()) {
