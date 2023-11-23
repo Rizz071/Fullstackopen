@@ -69,7 +69,7 @@ const App = () => {
                 }, 3000)
               })
               .catch((error) => {
-                setError(`Error catched during replaceing person in server: ${error.message}`)
+                setError(`Error catched during replaceing person in server: ${error.response.data.error}`)
                 setTimeout(() => {
                   setError(null)
                 }, 3000)
@@ -93,7 +93,7 @@ const App = () => {
           setPersons(persons.concat(newPerson))
         })
         .catch((error) => {
-          setError(`Error catched during adding person to server: ${error.message}`)
+          setError(`Error catched during adding person to server: ${error.response.data.error}`)
           setTimeout(() => {
             setError(null)
           }, 3000)
