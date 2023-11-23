@@ -80,12 +80,10 @@ const App = () => {
           setTimeout(() => {
             setNotification(null)
           }, 3000)
-
           setPersons(persons.concat(newPerson))
         })
         .catch((error) => {
-          console.log('Error catched during adding person to server: ', error)
-          setError(`Error catched during adding person to server: ${newPerson.name}`)
+          setError(`Error catched during adding person to server: ${error}`)
           setTimeout(() => {
             setError(null)
           }, 3000)
