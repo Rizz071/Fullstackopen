@@ -6,7 +6,6 @@ const getAll = () => {
     const request = axios.get(baseURL)
     return request
         .then(response => response.data)
-        .catch((error) => { console.log('Error catched during retrieving data from server: ', error) })
 }
 
 const addPerson = (person) => {
@@ -31,7 +30,6 @@ const replacePerson = (personToReplace) => {
             console.log(`Replacing `, personToReplace, ` in db.json was successfull.`)
             return response.data
         })
-        .catch((error) => { console.log('Error catched during replacing person in a server: ', error) })
 }
 
 export default {

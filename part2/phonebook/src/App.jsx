@@ -57,13 +57,23 @@ const App = () => {
         //New Person === Old Person AND New Number !== Old Number -> replacing numbers
         if (person.name.toLowerCase() === newName.toLowerCase() && person.number.toLowerCase() !== newNumber.toLowerCase()) {
           if (window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)) {
-            PersonsService.replacePerson({ name: newName, number: newNumber, id: person.id })
-            setPersons(persons.map(p => p.id !== person.id ? p : { name: newName, number: newNumber, id: person.id }))
+            PersonsService
+              .replacePerson({ name: newName, number: newNumber, id: person.id })
+              .then(() => {
 
-            setNotification(`Old number of ${person.name} was replaced by ${newNumber}`)
-            setTimeout(() => {
-              setNotification(null)
-            }, 3000)
+                setPersons(persons.map(p => p.id !== person.id ? p : { name: newName, number: newNumber, id: person.id }))
+
+                setNotification(`Old number of ${person.name} was replaced by ${newNumber}`)
+                setTimeout(() => {
+                  setNotification(null)
+                }, 3000)
+              })
+              .catch((error) => {
+                setError(`Error catched during replaceing person in server: ${error.message}`)
+                setTimeout(() => {
+                  setError(null)
+                }, 3000)
+              })
           }
         }
       }
@@ -83,7 +93,7 @@ const App = () => {
           setPersons(persons.concat(newPerson))
         })
         .catch((error) => {
-          setError(`Error catched during adding person to server: ${error}`)
+          setError(`Error catched during adding person to server: ${error.message}`)
           setTimeout(() => {
             setError(null)
           }, 3000)
